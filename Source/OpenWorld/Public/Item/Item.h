@@ -23,16 +23,25 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SineValues")
 	float TimeConstant = 5.f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SineValues")
+	float RunningTime;
+
 	UFUNCTION(BlueprintPure)
 	float GetSinValue();
 
 	UFUNCTION(BlueprintPure)
 	float GetCoSinValue();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SineValues")
-	float RunningTime;
+	template<typename T>
+	T GetAvg(T Input01, T Input02);
 
 private:
-	float MovementRate = 50.f;
-	float RotationRate = 45.f;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* ItemMesh;
 };
+
+template<typename T>
+inline T AItem::GetAvg(T Input01, T Input02)
+{
+	return (Input01 + Input02) / 2;
+}
